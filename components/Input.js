@@ -1,5 +1,5 @@
-import React from "react";
-import { TextInput, StyleSheet } from "react-native";
+import React from 'react'
+import { TextInput, StyleSheet } from 'react-native'
 
 export const Input = ({ value, changeHandler, secureTextEntry }) => {
   return (
@@ -10,13 +10,15 @@ export const Input = ({ value, changeHandler, secureTextEntry }) => {
       autoCapitalize="none"
       autoCompleteType="off"
       secureTextEntry={secureTextEntry}
-    ></TextInput>
-  );
-};
+    />
+  )
+}
 
 const styles = StyleSheet.create({
   simpleTextInput: {
-    border: "solid 1px grey",
-    borderRadius: "3px",
+    borderWidth: 2,
+    borderRadius: 3,
+    borderColor: 'grey',
+    borderStyle: 'solid'
   },
-});
+})
