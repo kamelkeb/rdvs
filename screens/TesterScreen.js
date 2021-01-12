@@ -1,15 +1,22 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StyleSheet, Text, SafeAreaView, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Input } from "../components/Input";
 import { GenericButton } from "../components/GenericButton";
+import { doSignin } from "../features/currentUser/currentUserSlice";
 
 const LogginForm = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  const errorMessage = useSelector((state) => state.currentUser.error);
+  const dispatch = useDispatch();
+
+  const loginHandler = () => {
+    dispatch(doSignin(credentials));
+  };
   return (
     <View>
       <Text>Email</Text>
@@ -29,11 +36,10 @@ const LogginForm = () => {
             return { ...credentials, password: newValue };
           })
         }
+        secureTextEntry
       ></Input>
-      <GenericButton
-        onPress={() => console.log(credentials.email)}
-        name="Sign in"
-      ></GenericButton>
+      <Text style={{ color: "red" }}>{errorMessage}</Text>
+      <GenericButton onPress={loginHandler} name="Sign in"></GenericButton>
     </View>
   );
 };
@@ -41,6 +47,7 @@ const LogginForm = () => {
 export const TesterScreen = () => {
   const isLoggedin = useSelector((state) => state.currentUser.isLoggedin);
   const email = useSelector((state) => state.currentUser.userProfile.email);
+
   return (
     <SafeAreaView style={styles.container}>
       {isLoggedin ? (
@@ -49,6 +56,7 @@ export const TesterScreen = () => {
         <Text>Vous n'êtes pas loggé!</Text>
       )}
       {isLoggedin || <LogginForm></LogginForm>}
+
       <StatusBar style="auto" />
     </SafeAreaView>
   );

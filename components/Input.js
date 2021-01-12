@@ -1,12 +1,15 @@
 import React from "react";
 import { TextInput, StyleSheet } from "react-native";
 
-export const Input = ({ value, changeHandler }) => {
+export const Input = ({ value, changeHandler, secureTextEntry }) => {
   return (
     <TextInput
       style={styles.simpleTextInput}
       value={value}
       onChangeText={changeHandler}
+      autoCapitalize="none"
+      autoCompleteType="off"
+      secureTextEntry={secureTextEntry}
     ></TextInput>
   );
 };
