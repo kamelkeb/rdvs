@@ -1,18 +1,17 @@
-import { useSelector } from 'react-redux'
-import React from 'react'
-import UserHome from './UserHome'
-import LogginScreen from './LogginScreen'
+import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import UserHome from "./UserHome";
+import LogginScreen from "./LogginScreen";
+import { auth } from "../firebase";
 
-const Index = () => {
+export const Index = () => {
+  const isLoggedin = useSelector((state) => state.currentUser.isLoggedin);
 
-  const isLoggedin = useSelector((state) => state.currentUser.isLoggedin)
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+    });
+  }, []);
 
-  return (isLoggedin ? (
-        <UserHome/>
-      ) : (
-        <LogginScreen/>
-      )
-    )
-}
-
-export default Index
+  return isLoggedin ? <UserHome /> : <LogginScreen />;
+};
