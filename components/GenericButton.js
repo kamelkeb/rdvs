@@ -1,5 +1,6 @@
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import React from "react";
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
+
 
 export const GenericButton = ({ onPress, name }) => {
   return (

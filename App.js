@@ -1,8 +1,7 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import store from "./store/store";
 import { Provider } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import store from "./store/store";
 import Index from "./screens";
 
 export default function App() {
