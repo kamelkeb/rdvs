@@ -1,13 +1,17 @@
 import React from "react";
 
-import store from "./store/store";
 import { Provider } from "react-redux";
-import { Index } from "./screens";
+import { NavigationContainer } from "@react-navigation/native";
+import store from "./store/store";
+import Index from "./screens";
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <NavigationContainer>
+      <Provider store={store}>
       <Index />
-    </Provider>
+      </Provider>
+    </NavigationContainer>
+
   );
 }

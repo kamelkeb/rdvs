@@ -1,32 +1,27 @@
-import { Text, SafeAreaView, StyleSheet } from 'react-native'
-import { GenericButton } from '../components/GenericButton'
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { doSignout } from '../features/currentUser/currentUserSlice'
 
-const UserHome = () => {
-  const email = useSelector((state) => state.currentUser.userProfile.email)
-  const dispatch = useDispatch()
+import React from "react";
+import { useSelector } from "react-redux";
+import { Text, SafeAreaView, StyleSheet } from "react-native";
 
-  const logoutHandler = () => {
-    dispatch(doSignout())
-  }
-    return (
-      <SafeAreaView  style={styles.container}>
-        <Text>Bonjour cher {email}</Text>
-        <GenericButton onPress={logoutHandler} name="Sign Out"/>
+const UserHome = ({ navigation, route }) => {
+  const email = useSelector((state) => state.currentUser.userProfile.email);
 
-      </SafeAreaView>
-    )
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text>Bonjour cher {email}</Text>
+    </SafeAreaView>
+  );
 };
 
-export default UserHome
+export default UserHome;
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-})
+});
