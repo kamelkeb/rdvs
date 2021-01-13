@@ -1,3 +1,4 @@
+
 import { auth } from "../firebase";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -90,3 +91,4 @@ const Index = () => {
 };
 
 export default Index;
+

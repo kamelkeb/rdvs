@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useSelector } from "react-redux";
 import { Text, SafeAreaView, StyleSheet } from "react-native";
@@ -14,9 +15,11 @@ const UserHome = ({ navigation, route }) => {
 
 export default UserHome;
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
