@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Octicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import SignInFlowNavigator from "./SignInFlowNavigator";
+import SettingsDrawerNavigator from "./SettingsDrawerNavigator";
 import UserHome from "../screens/UserHome";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import BookingScreen from "../screens/BookingScreen";
@@ -63,7 +64,7 @@ const MainNavigator = () => {
           ></stackNavigator.Screen>
 
           <stackNavigator.Screen
-            component={SettingsScreen}
+            component={SettingsDrawerNavigator}
             name={"Settings"}
             options={({ navigation }) => ({
               title: "Settings",
@@ -79,21 +80,21 @@ const MainNavigator = () => {
           ></stackNavigator.Screen>
         </>
       ) : (
-          <>
-            <stackNavigator.Screen
-              component={WelcomeScreen}
-              name={"Welcome"}
-            ></stackNavigator.Screen>
-            <stackNavigator.Screen
-              component={BookingScreen}
-              name={"Booking"}>
-            </stackNavigator.Screen>
-            <stackNavigator.Screen
-              component={SignInFlowNavigator}
-              name={"Login flow"}
-            ></stackNavigator.Screen>
-          </>
-        )}
+        <>
+          <stackNavigator.Screen
+            component={WelcomeScreen}
+            name={"Welcome"}
+          ></stackNavigator.Screen>
+          <stackNavigator.Screen
+            component={BookingScreen}
+            name={"Booking"}
+          ></stackNavigator.Screen>
+          <stackNavigator.Screen
+            component={SignInFlowNavigator}
+            name={"Login flow"}
+          ></stackNavigator.Screen>
+        </>
+      )}
     </stackNavigator.Navigator>
   );
 };
