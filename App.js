@@ -3,15 +3,15 @@ import React from "react";
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import store from "./store/store";
-import Index from "./screens";
+
+import MainNavigator from "./navigation/MainNavigator";
 
 export default function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-      <Index />
+        <MainNavigator />
       </Provider>
     </NavigationContainer>
-
   );
 }

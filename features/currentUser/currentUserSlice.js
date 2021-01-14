@@ -1,4 +1,3 @@
-
 import { auth } from "../../firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -38,17 +37,17 @@ export const doSignout = createAsyncThunk("currentUser/doSignout", async () => {
   return await auth.signOut();
 });
 
-
-export const doResetPassword = createAsyncThunk("currentUser/doResetPassword", async ({email}) => {
-  return await auth.sendPasswordResetEmail(email);
-})
-
+export const doResetPassword = createAsyncThunk(
+  "currentUser/doResetPassword",
+  async ({ email }) => {
+    return await auth.sendPasswordResetEmail(email);
+  }
+);
 
 const currentUserSlice = createSlice({
   name: "currentUser",
   initialState,
   reducers: {
-
     doLocalSignIn: (state, action) => {
       state.isLoggedin = true;
       state.userProfile = {
@@ -63,7 +62,6 @@ const currentUserSlice = createSlice({
     cancelLocalSignIn: (state) => {
       state.isTryingLocalSignIn = false;
     },
-
   },
   extraReducers: {
     [doSignin.fulfilled]: (state, action) => {
@@ -103,7 +101,7 @@ const currentUserSlice = createSlice({
 
     [doResetPassword.fulfilled]: (state) => {
       state.sendPasswordRequestStatus = "succeeded";
-       state.errorSendPassword = null;
+      state.errorSendPassword = null;
     },
     [doResetPassword.pending]: (state) => {
       state.sendPasswordRequestStatus = "pending";
@@ -121,6 +119,5 @@ export const {
   doTryLocalSignIn,
   cancelLocalSignIn,
 } = currentUserSlice.actions;
-
 
 export default currentUserSlice.reducer;
