@@ -1,5 +1,5 @@
 import { firestore } from "../../firebase";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createSelector } from "@reduxjs/toolkit";
 import { accessCodes, timeSlots } from "./initialMockData";
 
 const initialState = {
@@ -17,3 +17,8 @@ const bookingSlice = createSlice({
 });
 
 export default bookingSlice.reducer;
+
+export const selectTimeSlots = createSelector(
+  [(state, accessCode) => state.booking.timeSlots[accessCode]],
+  timeSlots => timeSlots
+)

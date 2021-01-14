@@ -7,6 +7,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import SignInFlowNavigator from "./SignInFlowNavigator";
 import UserHome from "../screens/UserHome";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import BookingScreen from "../screens/BookingScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import {
   doSignout,
@@ -78,17 +79,21 @@ const MainNavigator = () => {
           ></stackNavigator.Screen>
         </>
       ) : (
-        <>
-          <stackNavigator.Screen
-            component={WelcomeScreen}
-            name={"Welcome"}
-          ></stackNavigator.Screen>
-          <stackNavigator.Screen
-            component={SignInFlowNavigator}
-            name={"Login flow"}
-          ></stackNavigator.Screen>
-        </>
-      )}
+          <>
+            <stackNavigator.Screen
+              component={WelcomeScreen}
+              name={"Welcome"}
+            ></stackNavigator.Screen>
+            <stackNavigator.Screen
+              component={BookingScreen}
+              name={"Booking"}>
+            </stackNavigator.Screen>
+            <stackNavigator.Screen
+              component={SignInFlowNavigator}
+              name={"Login flow"}
+            ></stackNavigator.Screen>
+          </>
+        )}
     </stackNavigator.Navigator>
   );
 };
