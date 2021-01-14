@@ -3,11 +3,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isTryingLocalSignIn: true,
-  signInRequestStatus: "idle",
   signOutRequestStatus: "idle",
   sendPasswordRequestStatus: "idle",
   errorSendPassword: null,
   errorSignIn: null,
+  signInRequestStatus: "idle",
   errorSignOut: null,
   isLoggedin: false,
 

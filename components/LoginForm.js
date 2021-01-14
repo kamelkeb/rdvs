@@ -8,25 +8,26 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 
 export const LoginForm = () => {
-const navigation = useNavigation();
-const route=useRoute();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
-useEffect(()=>{
-  const unsubscribe=navigation.addListener("focus",()=>{setCredentials((credentials)=>{return {...credentials,email:route.params.email}})})
-  
-  return unsubscribe;
-},[navigation,route,credentials,setCredentials]
-)
-
   const errorMessageSignIn = useSelector(
     (state) => state.currentUser.errorSignIn
   );
-
   const dispatch = useDispatch();
-  
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setCredentials((credentials) => {
+        return { ...credentials, email: route.params.email };
+      });
+    });
+
+    return unsubscribe;
+  }, [navigation, route, credentials, setCredentials]);
 
   const loginHandler = () => {
     dispatch(doSignin(credentials));
@@ -55,9 +56,11 @@ useEffect(()=>{
         secureTextEntry
       />
       <TouchableOpacity
-        onPress={() => navigation.navigate("Request reset email",{
-          email:credentials.email,
-        })}
+        onPress={() =>
+          navigation.navigate("Request reset email", {
+            email: credentials.email,
+          })
+        }
       >
         <Text style={{ color: "blue" }}>Mot de passe oublié ?</Text>
       </TouchableOpacity>
