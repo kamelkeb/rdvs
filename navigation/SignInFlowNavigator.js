@@ -14,10 +14,16 @@ const SignInFlowNavigator = () => {
       <stackNavigator.Screen
         component={LoginScreen}
         name={"Login"}
+        initialParams={{
+          email:""
+        }}
       ></stackNavigator.Screen>
       <stackNavigator.Screen
         component={RequestResetPasswordScreen}
         name={"Request reset email"}
+        initialParams={{
+          email:""
+        }}
       ></stackNavigator.Screen>
     </stackNavigator.Navigator>
   );

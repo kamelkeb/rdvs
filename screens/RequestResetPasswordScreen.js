@@ -6,7 +6,7 @@ import { Input } from "../components/Input";
 import { doResetPassword } from "../features/currentUser/currentUserSlice";
 
 const RequestResetPasswordScreen = ({ navigation, route }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(route.params.email);
   const passwordRequestStatus = useSelector(
     (state) => state.currentUser.sendPasswordRequestStatus
   );
@@ -28,7 +28,7 @@ const RequestResetPasswordScreen = ({ navigation, route }) => {
             check your spams folder if you don't find it.
           </Text>
           <GenericButton
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => navigation.navigate("Login",{email:email})}
             name="Got it!"
           ></GenericButton>
         </>
