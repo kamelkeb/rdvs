@@ -1,4 +1,4 @@
-import { auth } from "../../firebase";
+import { auth, firestore } from "../../firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -12,8 +12,16 @@ const initialState = {
   isLoggedin: false,
 
   userProfile: {
+    userProfileId: null,
     id: null,
+    userProfileId: null,
     email: null,
+    name: null,
+    surname: "Kam",
+    address: null,
+    tel: null,
+    postcode: null,
+    town: null,
   },
 };
 
@@ -44,6 +52,31 @@ export const doResetPassword = createAsyncThunk(
   }
 );
 
+export const userProfileUpdate = createAsyncThunk(
+  "currentUser/userProfileUpdate",
+  async ({ data, id }) => {
+    const individualsRef = firestore.collection("individuals");
+    individualsRef.doc(id).update(data);
+  }
+);
+
+export const userProfileCreate = createAsyncThunk(
+  "currentUser/userProfileCreate",
+  async (userProfile) => {
+    const individualsRef = firestore.collection("individuals");
+    const userProfileRef = await individualsRef.add(userProfile);
+    const content = await userProfileRef.get();
+    return { userProfileId: userProfileRef.id };
+  }
+);
+export const userProfileDelete = createAsyncThunk(
+  "currentUser/userProfileDelete",
+  async (userProfileId) => {
+    const individualsRef = firestore.collection("individuals");
+    individualsRef.doc(userProfileId).delete();
+  }
+);
+
 const currentUserSlice = createSlice({
   name: "currentUser",
   initialState,
@@ -51,6 +84,7 @@ const currentUserSlice = createSlice({
     doLocalSignIn: (state, action) => {
       state.isLoggedin = true;
       state.userProfile = {
+        ...state.userProfile,
         id: action.payload.id,
         email: action.payload.email,
       };
@@ -61,6 +95,9 @@ const currentUserSlice = createSlice({
     },
     cancelLocalSignIn: (state) => {
       state.isTryingLocalSignIn = false;
+    },
+    localUserUpdate: (state, action) => {
+      state.userProfile = { ...state.userProfile, ...action.payload };
     },
   },
   extraReducers: {
@@ -111,6 +148,13 @@ const currentUserSlice = createSlice({
       state.sendPasswordRequestStatus = "failed";
       state.errorSendPassword = action.error.message;
     },
+    [userProfileCreate.fulfilled]: (state, action) => {
+      console.log("Payload: ", action.payload);
+      state.userProfile = { ...state.userProfile, ...action.payload };
+    },
+    [userProfileUpdate.rejected]: (state, action) => {
+      console.log(action.error.message);
+    },
   },
 });
 
@@ -118,6 +162,7 @@ export const {
   doLocalSignIn,
   doTryLocalSignIn,
   cancelLocalSignIn,
+  localUserUpdate,
 } = currentUserSlice.actions;
 
 export default currentUserSlice.reducer;

@@ -3,19 +3,18 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Octicons } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
 import SignInFlowNavigator from "./SignInFlowNavigator";
-import SettingsDrawerNavigator from "./SettingsDrawerNavigator";
-import UserHome from "../screens/UserHome";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import BookingScreen from "../screens/BookingScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import {
   doSignout,
   doLocalSignIn,
   doTryLocalSignIn,
   cancelLocalSignIn,
 } from "../features/currentUser/currentUserSlice";
+import UserHome from "../screens/UserHome";
+import SettingsDrawerNavigator from "./SettingsDrawerNavigator";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 const stackNavigator = createStackNavigator();
 

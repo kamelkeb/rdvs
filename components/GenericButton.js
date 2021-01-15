@@ -1,8 +1,5 @@
-
 import React from "react";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
-
-
 
 export const GenericButton = ({ onPress, name }) => {
   return (
@@ -14,7 +11,9 @@ export const GenericButton = ({ onPress, name }) => {
 
 const styles = StyleSheet.create({
   genericButton: {
-    border: "solid 1px blue",
+    borderStyle: "solid",
+    borderBottomWidth: 1,
+    borderColor: "blue",
     backgroundColor: "lightblue",
     borderRadius: 3,
     margin: 4,
