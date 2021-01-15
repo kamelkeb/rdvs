@@ -1,5 +1,9 @@
 import { auth, firestore } from "../../firebase";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+export const USER_PROFILES_COLLECTION = "individuals";
 
 const initialState = {
   isTryingLocalSignIn: true,
@@ -12,7 +16,6 @@ const initialState = {
   isLoggedin: false,
 
   userProfile: {
-    userProfileId: null,
     id: null,
     userProfileId: null,
     email: null,
@@ -52,27 +55,29 @@ export const doResetPassword = createAsyncThunk(
   }
 );
 
+export const userProfileCreate = createAsyncThunk(
+  "currentUser/userProfileCreate",
+  async (userProfile) => {
+    const individualsRef = firestore.collection(USER_PROFILES_COLLECTION);
+    const userProfileRef = await individualsRef.add(userProfile);
+    const profileSnapshot = await userProfileRef.get();
+
+    return { userProfileId: userProfileRef.id, ...profileSnapshot.data() };
+  }
+);
+
 export const userProfileUpdate = createAsyncThunk(
   "currentUser/userProfileUpdate",
   async ({ data, id }) => {
-    const individualsRef = firestore.collection("individuals");
+    const individualsRef = firestore.collection(USER_PROFILES_COLLECTION);
     individualsRef.doc(id).update(data);
   }
 );
 
-export const userProfileCreate = createAsyncThunk(
-  "currentUser/userProfileCreate",
-  async (userProfile) => {
-    const individualsRef = firestore.collection("individuals");
-    const userProfileRef = await individualsRef.add(userProfile);
-    const content = await userProfileRef.get();
-    return { userProfileId: userProfileRef.id };
-  }
-);
 export const userProfileDelete = createAsyncThunk(
   "currentUser/userProfileDelete",
   async (userProfileId) => {
-    const individualsRef = firestore.collection("individuals");
+    const individualsRef = firestore.collection(USER_PROFILES_COLLECTION);
     individualsRef.doc(userProfileId).delete();
   }
 );
@@ -152,6 +157,9 @@ const currentUserSlice = createSlice({
       console.log("Payload: ", action.payload);
       state.userProfile = { ...state.userProfile, ...action.payload };
     },
+    [userProfileCreate.rejected]: (state, action) => {
+      console.log(action.error.message);
+    },
     [userProfileUpdate.rejected]: (state, action) => {
       console.log(action.error.message);
     },
@@ -166,3 +174,24 @@ export const {
 } = currentUserSlice.actions;
 
 export default currentUserSlice.reducer;
+
+// Custom Hooks:
+
+export const useProfileInit = () => {
+  const userId = useSelector((state) => state.currentUser.userProfile.id);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const individualsRef = firestore.collection(USER_PROFILES_COLLECTION);
+    const cleanup = individualsRef
+      .where("userId", "==", userId)
+      .onSnapshot(({ docs }) => {
+        if (docs && docs.length > 0) {
+          dispatch(
+            localUserUpdate({ userProfileId: docs[0].id, ...docs[0].data() })
+          );
+        }
+      });
+
+    return cleanup;
+  }, [dispatch, userId]);
+};

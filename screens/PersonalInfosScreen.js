@@ -12,6 +12,7 @@ import {
 
 const PersonalInfosScreen = ({ navigation, route }) => {
   const userProfile = useSelector((state) => state.currentUser.userProfile);
+  const userId = useSelector((state) => state.currentUser.userProfile.id);
   console.log(userProfile);
   const [name, setName] = useState(userProfile.name || "");
   const [surname, setSurname] = useState(userProfile.surname || "");
@@ -30,6 +31,7 @@ const PersonalInfosScreen = ({ navigation, route }) => {
       tel,
       postcode,
       town,
+      userId,
     };
   };
 
